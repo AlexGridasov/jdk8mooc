@@ -29,12 +29,14 @@ public class Lesson1Test {
 
     @Test
     public void exercise4() throws Exception {
-
+        assertEquals("a1b2c3",
+                Lesson1.exercise4());
     }
 
     @Test
     public void exercise5() throws Exception {
-
+        assertEquals("12345678910",
+                Lesson1.exercise5());
     }
 
 }

@@ -86,13 +86,16 @@ public class Lesson1 {
      * Convert every key-value pair of the map into a string and append them all
      * into a single string, in iteration order.
      */
-    public void exercise4() {
+    public static String exercise4() {
         Map<String, Integer> map = new TreeMap<>();
         map.put("c", 3);
         map.put("b", 2);
         map.put("a", 1);
 
-    /* YOUR CODE HERE */
+        return map.entrySet()
+                .stream()
+                .map(e -> e.getKey() + e.getValue())
+                .collect(Collectors.joining());
     }
 
     /**
@@ -100,10 +103,16 @@ public class Lesson1 {
      *
      * Create a new thread that prints the numbers from the list.
      */
-    public void exercise5() {
-        List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+    public static String exercise5() {
+        final List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 
-    /* YOUR CODE HERE */
+        Runnable r = () -> list.forEach(System.out::println);
+        Thread thread = new Thread(r);
+        thread.start();
+
+        return list.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining());
     }
 
     /**
