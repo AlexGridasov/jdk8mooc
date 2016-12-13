@@ -10,31 +10,31 @@ import static org.junit.Assert.*;
 public class Lesson1Test {
 
     @Test
-    public void exercise1() throws Exception {
+    public void stringConsistsOfTheFirstLetterOfEachWord() throws Exception {
         assertEquals("abcdef",
                 Lesson1.exercise1());
     }
 
     @Test
-    public void exercise2() throws Exception {
-        assertEquals("alpha, bravo, charlie, delta, foxtrot",
+    public void removedWordsWithOddLengths() throws Exception {
+        assertEquals("echo",
                 Lesson1.exercise2());
     }
 
     @Test
-    public void exercise3() throws Exception {
+    public void wordsConvertedToUpperCase() throws Exception {
         assertEquals("ALPHA, BRAVO, CHARLIE, DELTA, ECHO, FOXTROT",
                 Lesson1.exercise3());
     }
 
     @Test
-    public void exercise4() throws Exception {
+    public void convertEveryKeyValueIntoString() throws Exception {
         assertEquals("a1b2c3",
                 Lesson1.exercise4());
     }
 
     @Test
-    public void exercise5() throws Exception {
+    public void newThreadThatPrintsNumbers() throws Exception {
         assertEquals("12345678910",
                 Lesson1.exercise5());
     }

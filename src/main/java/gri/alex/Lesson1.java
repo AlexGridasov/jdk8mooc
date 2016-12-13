@@ -62,7 +62,7 @@ public class Lesson1 {
                 "alpha", "bravo", "charlie", "delta", "echo", "foxtrot"));
 
         return list.stream()
-                .filter(str -> str.length() % 2 != 0)
+                .filter(str -> str.length() % 2 == 0)
                 .collect(Collectors.joining(", "));
     }
 

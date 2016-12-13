@@ -7,12 +7,15 @@ package gri.alex;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 
 public class Lesson2 {
@@ -23,7 +26,7 @@ public class Lesson2 {
      *
      * @throws IOException
      */
-    public void runExercises() throws IOException {
+    public void runExercises() throws Exception {
         System.out.println("JDK 8 Lambdas and Streams MOOC Lesson 2");
         System.out.println("Running exercise 1 solution...");
         exercise1();
@@ -93,11 +96,15 @@ public class Lesson2 {
     /**
      * Count the number of lines in the file using the BufferedReader provided
      */
-    public int exercise4() throws IOException {
-        try (BufferedReader reader = Files.newBufferedReader(
-                Paths.get("SonnetI.txt"), StandardCharsets.UTF_8)) {
+    public long exercise4() throws Exception {
+        Path path = Paths.get(ClassLoader.getSystemResource("SonnetI.txt").toURI());
+        long lines = 0;
+
+        try (BufferedReader reader = Files.newBufferedReader(path, UTF_8)) {
+            lines = reader.lines().count();
         }
-        return 0;
+
+        return lines;
     }
 
     /**
@@ -106,11 +113,20 @@ public class Lesson2 {
      *
      * HINT: A regular expression, WORD_REGEXP, is already defined for your use.
      */
-    public void exercise5() throws IOException {
-        try (BufferedReader reader = Files.newBufferedReader(
-                Paths.get("SonnetI.txt"), StandardCharsets.UTF_8)) {
-      /* YOUR CODE HERE */
+    public String exercise5() throws Exception {
+        Path path = Paths.get(ClassLoader.getSystemResource("SonnetI.txt").toURI());
+        String uniqueWords = "";
+
+        try (BufferedReader reader = Files.newBufferedReader(path, UTF_8)) {
+            uniqueWords = reader
+                    .lines()
+                    .flatMap(line -> Arrays.stream(line.split(WORD_REGEXP)))
+                    .distinct()
+                    .collect(Collectors.toList())
+                    .toString();
         }
+
+        return uniqueWords;
     }
 
     /**
@@ -118,21 +134,39 @@ public class Lesson2 {
      * the file, converted to lower-case and with duplicates removed, which is
      * sorted by natural order.  Print the contents of the list.
      */
-    public void exercise6() throws IOException {
-        try (BufferedReader reader = Files.newBufferedReader(
-                Paths.get("SonnetI.txt"), StandardCharsets.UTF_8)) {
-      /* YOUR CODE HERE */
+    public String exercise6() throws Exception {
+        String uniqueSortedWords = "";
+        Path path = Paths.get(ClassLoader.getSystemResource("SonnetI.txt").toURI());
+
+        try (BufferedReader reader = Files.newBufferedReader(path, UTF_8)) {
+            uniqueSortedWords = reader.lines()
+                    .flatMap(line -> Arrays.stream(line.split(WORD_REGEXP)))
+                    .distinct()
+                    .map(String::toLowerCase)
+                    .sorted()
+                    .collect(Collectors.toList())
+                    .toString();
         }
+        return uniqueSortedWords;
     }
 
     /**
      * Modify exercise6 so that the words are sorted by length
      */
-    public void exercise7() throws IOException {
-        try (BufferedReader reader = Files.newBufferedReader(
-                Paths.get("SonnetI.txt"), StandardCharsets.UTF_8)) {
-      /* YOUR CODE HERE */
+    public String exercise7() throws Exception {
+        String uniqueSortedWords = "";
+        Path path = Paths.get(ClassLoader.getSystemResource("SonnetI.txt").toURI());
+
+        try (BufferedReader reader = Files.newBufferedReader(path, UTF_8)) {
+            uniqueSortedWords = reader.lines()
+                    .flatMap(line -> Arrays.stream(line.split(WORD_REGEXP)))
+                    .distinct()
+                    .map(String::toLowerCase)
+                    .sorted(Comparator.comparing(String::length))
+                    .collect(Collectors.toList())
+                    .toString();
         }
+        return uniqueSortedWords;
     }
 
     /**
@@ -141,10 +175,9 @@ public class Lesson2 {
      * @param args the command line arguments
      * @throws IOException If file access does not work
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         Lesson2 lesson = new Lesson2();
-//        lesson.runExercises();
-        lesson.exercise4();
+        lesson.runExercises();
     }
 }
 
