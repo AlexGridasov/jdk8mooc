@@ -5,11 +5,7 @@
  */
 package lesson1;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * @author Speakjava (Simon Ritter)
@@ -40,7 +36,7 @@ public class Lesson1 {
      */
     /**
      * Exercise 1
-     *
+     * <p>
      * Create a string that consists of the first letter of each word in the list
      * of Strings provided.
      */
@@ -53,7 +49,7 @@ public class Lesson1 {
 
     /**
      * Exercise 2
-     *
+     * <p>
      * Remove the words that have odd lengths from the list.
      */
     private void exercise2() {
@@ -65,7 +61,7 @@ public class Lesson1 {
 
     /**
      * Exercise 3
-     *
+     * <p>
      * Replace every word in the list with its upper case equivalent.
      */
     private void exercise3() {
@@ -77,7 +73,7 @@ public class Lesson1 {
 
     /**
      * Exercise 4
-     *
+     * <p>
      * Convert every key-value pair of the map into a string and append them all
      * into a single string, in iteration order.
      */
@@ -92,7 +88,7 @@ public class Lesson1 {
 
     /**
      * Exercise 5
-     *
+     * <p>
      * Create a new thread that prints the numbers from the list.
      */
     private void exercise5() {

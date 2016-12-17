@@ -12,8 +12,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Speakjava (Simon Ritter)
@@ -46,7 +44,7 @@ public class Lesson2 {
 
     /**
      * Exercise 1
-     *
+     * <p>
      * Create a new list with all the strings from original list converted to
      * lower case and print them out.
      */
@@ -59,7 +57,7 @@ public class Lesson2 {
 
     /**
      * Exercise 2
-     *
+     * <p>
      * Modify exercise 1 so that the new list only contains strings that have an
      * odd length
      */
@@ -72,7 +70,7 @@ public class Lesson2 {
 
     /**
      * Exercise 3
-     *
+     * <p>
      * Join the second, third and forth strings of the list into a single string,
      * where each word is separated by a hyphen (-). Print the resulting string.
      */
@@ -96,7 +94,7 @@ public class Lesson2 {
     /**
      * Using the BufferedReader to access the file, create a list of words with
      * no duplicates contained in the file.  Print the words.
-     *
+     * <p>
      * HINT: A regular expression, WORD_REGEXP, is already defined for your use.
      */
     private void exercise5() throws IOException {
