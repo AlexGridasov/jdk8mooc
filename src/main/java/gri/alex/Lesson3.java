@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Lesson3 {
     /* How many times to repeat the test.  5 seems to give reasonable results */
@@ -64,16 +66,20 @@ public class Lesson3 {
         final int LIST_SIZE = wordList.size();
         int[][] distances = new int[LIST_SIZE][LIST_SIZE];
 
-        /*
-        * TODO:
-        * Use IntStream to create a stream of indices for one dimension of the array
-        * so this can be left sequential or converted to parallel, as required.
-        */
-        for (int i = 0; i < LIST_SIZE; i++) {
+        /*for (int i = 0; i < LIST_SIZE; i++) {
             for (int j = 0; j < LIST_SIZE; j++) {
                 distances[i][j] = Levenshtein.lev(wordList.get(i), wordList.get(j));
             }
-        }
+        }*/
+
+        IntStream range = IntStream.range(0, LIST_SIZE);
+        range = parallel ? range.parallel() : range;
+        range.forEach(
+                i -> wordList.forEach(
+                        word -> distances[i][wordList.indexOf(word)] =
+                                Levenshtein.lev(word, wordList.get(i))
+                )
+        );
 
         return distances;
     }
@@ -89,41 +95,15 @@ public class Lesson3 {
         List<String> words;
 
         // sorting the strings
-        /*if (parallel) {
-            words = wordList.parallelStream()
-                    .sorted()
-                    .collect(Collectors.toList());
-        } else {
-            words = wordList.stream()
-                    .sorted()
-                    .collect(Collectors.toList());
-        }*/
-
         // mapping to lower or upper case
-        /*if (parallel) {
-            words = wordList.parallelStream()
-                    .sorted()
-                    .map(String::toLowerCase)
-                    .collect(Collectors.toList());
-        } else {
-            words = wordList.stream()
-                    .sorted()
-                    .map(String::toLowerCase)
-                    .collect(Collectors.toList());
-        }*/
-
         // filtering out certain words (such as those beginning with a certain letter)
-        if (parallel) {
-            words = wordList.parallelStream()
-                    .sorted()
-                    .filter(w -> w.startsWith("a"))
-                    .collect(Collectors.toList());
-        } else {
-            words = wordList.stream()
-                    .sorted()
-                    .filter(w -> w.startsWith("a"))
-                    .collect(Collectors.toList());
-        }
+
+        Stream<String> stringStream = parallel ? wordList.parallelStream() : wordList.stream();
+
+        words = stringStream
+                .sorted()
+                .filter(w -> w.startsWith("a"))
+                .collect(Collectors.toList());
 
         return words;
     }
@@ -136,12 +116,12 @@ public class Lesson3 {
      */
     public static void main(String[] args) throws Exception {
         RandomWords fullWordList = new RandomWords();
-        List<String> wordList = fullWordList.createList(10);
+        List<String> wordList = fullWordList.createList(5_000);
 
-        measure("Sequential", () -> computeLevenshtein(wordList, false));
-        measure("Parallel", () -> computeLevenshtein(wordList, true));
+//        measure("Sequential", () -> computeLevenshtein(wordList, false));
+//        measure("Parallel", () -> computeLevenshtein(wordList, true));
 
-//        measure("Sequential", () -> processWords(wordList, false));
-//        measure("Parallel", () -> processWords(wordList, true));
+        measure("Sequential", () -> processWords(wordList, false));
+        measure("Parallel", () -> processWords(wordList, true));
     }
 }
